@@ -1,34 +1,31 @@
-import React from "react"
+import React from "react";
+import TodoList from "./TodoList";
 class TodoContainer extends React.Component {
   state = {
     todos: [
       {
         id: 1,
         title: "Setup development environment",
-        completed: true
+        completed: true,
       },
       {
         id: 2,
         title: "Develop website and add content",
-        completed: false
+        completed: false,
       },
       {
         id: 3,
         title: "Deploy to live server",
-        completed: false
-      }
-    ]
-   };
+        completed: false,
+      },
+    ],
+  };
   render() {
     return (
-   <ul>
-     {this.state.todos.map(todo => (
-     <li>
-       {todo.title}
-     </li>
-     ))}
-   </ul>
-    )
+      <div>
+        <TodoList todos={this.state.todos} />
+      </div>
+    );
   }
 }
-export default TodoContainer
+export default TodoContainer;
