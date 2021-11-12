@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react"
-import Header from "./Header"
-import InputTodo from "./InputTodo"
-import TodoList from "./TodoList"
-import { v4 as uuidv4 } from "uuid"
+import React, { useState, useEffect } from "react";
+import { Route, Switch } from "react-router-dom";
+import Header from "./Header";
+import InputTodo from "./InputTodo";
+import TodoList from "./TodoList";
+import { v4 as uuidv4 } from "uuid";
+import About from "../pages/About";
+import Navbar from "./NavBar"
+import NotMatch from "../pages/NotMatch";
 
 const TodoContainer = () => {
   const [todos, setTodos] = useState(getInitialTodos())
@@ -55,18 +59,6 @@ const TodoContainer = () => {
     localStorage.setItem("todos", temp)
   }, [todos])
 
-  // useEffect(() => {
-  //   console.log("test run")
-  
-  //   // getting stored items
-  //   const temp = localStorage.getItem("todos")
-  //   const loadedTodos = JSON.parse(temp)
-  
-  //   if (loadedTodos) {
-  //     setTodos(loadedTodos)
-  //   }
-  // }, [])
-
   function getInitialTodos() {
     // getting stored items
     const temp = localStorage.getItem("todos")
@@ -75,19 +67,32 @@ const TodoContainer = () => {
   }
 
   return (
-    <div className="container">
-      <div className="content">
-        <Header />
-        <InputTodo addTodoProps={addTodoItem} />
-        <TodoList
-          todos={todos}
-          handleChangeProps={handleChange}
-          deleteTodoProps={delTodo}
-          setUpdate={setUpdate}
-        />
+    <>
+    <Navbar />
+    <Switch>
+    <Route exact path="/">
+      <div className="container">
+        <div className="content">
+          <Header />
+          <InputTodo addTodoProps={addTodoItem} />
+          <TodoList
+            todos={todos}
+            handleChangeProps={handleChange}
+            deleteTodoProps={delTodo}
+            setUpdate={setUpdate}
+          />
+        </div>
       </div>
-    </div>
+    </Route>
+        <Route path="/about">
+        <About />
+      </Route>
+      <Route path="*">
+        <NotMatch />
+      </Route>
+    </Switch>
+    </>
   )
 }
 
-export default TodoContainer
+export default TodoContainer;
